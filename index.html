@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Validator</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script>
+
+
+        $(document).ready(function(){
+
+            $("#btnEmailValid").click(function(){
+               if(isValidEmail($("#email").val())){
+                    $('.output').html('Valid Email');
+               }
+               else{
+                    $('.output').html('Invalid Email');
+               }
+            })
+
+            function isAlphabet(char) {
+                return /^[A-Za-z]$/.test(char);
+            }
+
+            function isValid(str) {
+                return !/\.{2,}/.test(str);
+            }
+
+
+            function isValidEmail(email){
+
+                let splitEmail = email.split('@');
+                console.log(splitEmail);
+                
+                if(splitEmail.length === 2){
+
+                    let emailName = splitEmail[0];
+                    let domainNameAndExt = splitEmail[1];
+                    console.log(emailName, domainNameAndExt);
+
+                    if(emailName.length > 0){
+
+                        let domainSplit = domainNameAndExt.split('.');
+
+                        if(domainSplit.length >= 2){
+                            let domainName = domainSplit[0];
+                            let domainExt = domainSplit[1];
+
+                            if(domainName.length > 0){
+
+                                if(domainExt.length >= 2){
+
+                                    let lastLetterOfDomainExt = domainNameAndExt.charAt(domainNameAndExt.length-1);
+                                    console.log('Last letter of domain', domainNameAndExt, lastLetterOfDomainExt);
+                                    console.log(isAlphabet(lastLetterOfDomainExt));
+                                    if(isAlphabet(lastLetterOfDomainExt)){
+
+                                        if(isValid(domainNameAndExt)){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }   
+
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+
+                            return true;
+
+                        }
+                        else{
+                            return false;
+                        }
+
+                        return true; // the email name has at least 1 char
+                    }
+                    else{
+                        return false; // the email name has no characters
+                    }
+
+
+                    return true;
+
+                }
+                else{
+                    return false; // Does not have only one @
+                }
+                
+                
+                
+
+
+            }
+
+            console.log('Email Validation Result:', isValidEmail("b@gmail.ca"));
+
+
+        })
+
+    </script>
+</head>
+<body>
+
+    <input type="email" id="email"> 
+    <button id="btnEmailValid">Validate</button>
+    <div class="output"></div>
+    
+</body>
+</html>
